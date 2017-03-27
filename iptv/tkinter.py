@@ -13,6 +13,7 @@ import cv2
 import os, time
 import thread
 import numpy as np
+from country import country
 
 class tkinter:
 	def __init__(self):
@@ -22,8 +23,8 @@ class tkinter:
 		self.thread = None
 		self.state = False
 		self.stopEvent = None
+		self.c = country()
 		self.path = "/home/onuragtas/iptv/tv_channels_kalidas.m3u"
-
 		# initialize the root window and image panel
 		self.root = tki.Tk()
 		#self.toggle_fullscreen();
@@ -80,8 +81,12 @@ class tkinter:
 			try:
 				channel = item.split("http")
 				name = channel[0].rstrip().lstrip();
+				cname = name.split(":");
+				country = cname[0].upper();
+				name = cname[1].rstrip().lstrip();
 				url = "http"+channel[1].rstrip();
-				self.sql = self.sql+"INSERT INTO channels (title, rtmp, image, cat_id, sira)VALUES('"+name+"', '"+url+"', '','0', '0');\n";
+				c = self.c.c[str(country)]
+				self.sql = self.sql+"INSERT INTO channels (title, rtmp, image, cat_id, sira, country)VALUES('"+name+"', '"+url+"', '','0', '0', '"+c+"');\n";
 			except IndexError:
 				print("index hatası");
 		self.writeSQL();
