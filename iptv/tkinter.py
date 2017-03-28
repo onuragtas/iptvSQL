@@ -30,12 +30,7 @@ class tkinter:
 		self.root = tki.Tk()
 		#self.toggle_fullscreen();
 		#self.root.call('wm', 'attributes', '.', '-topmost', '1')
-		#print(self.c.c);
-		sorted_x = sorted(self.c.c.items(), key=operator.itemgetter(0))
-		i = 1;
-		for item,value in sorted_x:
-			print("'"+str(item)+"':'"+str(i)+"',");
-			i = i +1;
+		
 		self.panel = None
 		import sys
 		reload(sys)
