@@ -15,6 +15,7 @@ import thread
 import numpy as np
 from country import country
 import operator
+import MySQLdb
 
 class tkinter:
 	def __init__(self):
@@ -87,8 +88,11 @@ class tkinter:
 				country = cname[0].upper();
 				name = cname[1].rstrip().lstrip();
 				url = "http"+channel[1].rstrip();
-				c = self.c.c[str(country)]
-				self.sql = self.sql+"INSERT INTO channels (title, rtmp, image, cat_id, sira, country)VALUES('"+name+"', '"+url+"', '','0', '0', '"+c+"');\n";
+				try:
+					c = self.c.c[str(country)]
+					self.sql = self.sql+"INSERT INTO channels (title, rtmp, image, cat_id, sira, country)VALUES('"+MySQLdb.escape_string(name)+"', '"+MySQLdb.escape_string(url)+"', '','0', '0', '"+c+"');\n";
+				except:
+					print("error")
 			except IndexError:
 				print("index hatası");
 		self.writeSQL();
